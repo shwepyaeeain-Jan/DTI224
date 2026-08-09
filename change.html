@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Change Calculator</title>
+</head>
+<body>
+
+<h2>Change Calculator</h2>
+
+Amount:
+<input type="number" id="amount">
+<button onclick="calculate()">Calculate</button>
+
+<pre id="result"></pre>
+
+<script>
+function calculate() {
+    let amount = parseInt(document.getElementById("amount").value);
+if (isNaN(amount) || amount < 0) {
+    alert("Please enter a valid amount.");
+    return;
+}
+
+    let money = [1000, 500, 100, 50, 20, 10, 5, 2, 1];
+    let result = "";
+
+    for (let i = 0; i < money.length; i++) {
+        let count = Math.floor(amount / money[i]);
+        amount %= money[i];
+        result += money[i] + " = " + count + "\n";
+    }
+
+    document.getElementById("result").textContent = result;
+}
+</script>
+<button onclick="history.back()">Back</button>
+</body>
+</html>
