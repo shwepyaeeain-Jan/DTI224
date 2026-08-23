@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DTI224 Assignments</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196f3">
+    <title>Simple Unit Converter</title>
 
     <style>
         body {
@@ -41,6 +43,13 @@
         }
     </style>
 </head>
+ <script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker.register("service-worker.js");
+    });
+}
+</script>   
 
 <body>
 
