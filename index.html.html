@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Simple Unit Converter</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- PWA Theme Color -->
+    <meta name="theme-color" content="#2196f3">
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .box {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            width: 320px;
+
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+
+            margin-top: 0;
+        }
+
+        input,
+        select,
+        button {
+
+            width: 100%;
+
+            padding: 10px;
+
+            margin-top: 10px;
+
+            font-size: 16px;
+
+            box-sizing: border-box;
+        }
+
+        button {
+
+            background: #4CAF50;
+
+            color: white;
+
+            border: none;
+
+            cursor: pointer;
+
+            border-radius: 5px;
+        }
+
+        button:hover {
+
+            background: #45a049;
+        }
+
+        #result {
+
+            margin-top: 15px;
+
+            font-weight: bold;
+
+            text-align: center;
+
+            color: #222;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="box">
+
+        <h2>Unit Converter</h2>
+
+
+        <!-- Value Input -->
+
+        <input
+            type="number"
+            id="value"
+            placeholder="Enter value"
+        >
+
+
+        <!-- From Unit -->
+
+        <select id="fromUnit">
+
+            <option value="m">
+                Meter (m)
+            </option>
+
+            <option value="km">
+                Kilometer (km)
+            </option>
+
+            <option value="cm">
+                Centimeter (cm)
+            </option>
+
+            <option value="inch">
+                Inch
+            </option>
+
+            <option value="ft">
+                Foot (ft)
+            </option>
+
+        </select>
+
+
+        <!-- To Unit -->
+
+        <select id="toUnit">
+
+            <option value="m">
+                Meter (m)
+            </option>
+
+            <option value="km">
+                Kilometer (km)
+            </option>
+
+            <option value="cm">
+                Centimeter (cm)
+            </option>
+
+            <option value="inch">
+                Inch
+            </option>
+
+            <option value="ft">
+                Foot (ft)
+            </option>
+
+        </select>
+
+
+        <!-- Convert Button -->
+
+        <button onclick="convert()">
+
+            Convert
+
+        </button>
+
+
+        <!-- Result -->
+
+        <div id="result">
+
+            Result: --
+
+        </div>
+
+    </div>
+
+
+    <!-- Unit Conversion JavaScript -->
+
+    <script>
+
+        function toMeter(value, unit) {
+
+            switch (unit) {
+
+                case "km":
+
+                    return value * 1000;
+
+
+                case "cm":
+
+                    return value / 100;
+
+
+                case "inch":
+
+                    return value * 0.0254;
+
+
+                case "ft":
+
+                    return value * 0.3048;
+
+
+                default:
+
+                    return value;
+
+            }
+
+        }
+
+
+        function fromMeter(value, unit) {
+
+            switch (unit) {
+
+                case "km":
+
+                    return value / 1000;
+
+
+                case "cm":
+
+                    return value * 100;
+
+
+                case "inch":
+
+                    return value / 0.0254;
+
+
+                case "ft":
+
+                    return value / 0.3048;
+
+
+                default:
+
+                    return value;
+
+            }
+
+        }
+
+
+        function convert() {
+
+            let value =
+                parseFloat(
+                    document.getElementById("value").value
+                );
+
+
+            let from =
+                document.getElementById("fromUnit").value;
+
+
+            let to =
+                document.getElementById("toUnit").value;
+
+
+            // Check if the user entered a number
+
+            if (isNaN(value)) {
+
+                document.getElementById("result").innerHTML =
+                    "Please enter a number!";
+
+                return;
+
+            }
+
+
+            // Convert the original value to meters
+
+            let meters =
+                toMeter(value, from);
+
+
+            // Convert meters to the selected unit
+
+            let result =
+                fromMeter(meters, to);
+
+
+            // Display result
+
+            document.getElementById("result").innerHTML =
+
+                "Result: " +
+                result.toFixed(2) +
+                " " +
+                to;
+
+        }
+
+    </script>
+
+
+    <!-- PWA Service Worker -->
+
+    <script>
+
+        if ("serviceWorker" in navigator) {
+
+            window.addEventListener(
+                "load",
+                function() {
+
+                    navigator.serviceWorker.register(
+                        "service-worker.js"
+                    )
+
+                    .then(
+                        function() {
+
+                            console.log(
+                                "Service Worker registered successfully."
+                            );
+
+                        }
+                    )
+
+                    .catch(
+                        function(error) {
+
+                            console.log(
+                                "Service Worker registration failed:",
+                                error
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
